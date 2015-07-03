@@ -1,7 +1,7 @@
 /*!
  * create-element-basic <https://github.com/akileez/create-element-basic>
  *
- * Copyright (c) 2014 Keith Williams, contributors.
+ * Copyright (c) 2014-2015 Keith Williams, contributors.
  * Licensed under the MIT license.
  *
  * Copyright (c) 2013 Richard Willis
@@ -10,24 +10,48 @@
 
 'use strict';
 
- function openTag (type, closing, attr) {
-  var html = ['<' + type];
+var emptyTags = [
+  'link',
+  'track',
+  'param',
+  'area',
+  'command',
+  'col',
+  'base',
+  'meta',
+  'hr',
+  'source',
+  'img',
+  'keygen',
+  'br',
+  'wbr',
+  'input'
+]
+
+function openTag (type, closing, attr) {
+  var html = ['<' + type]
+
   for (var prop in attr) {
     // A falsy value is used to remove the attribute.
     // EG: attr[false] to remove, attr['false'] to add
-    if (attr[prop]) {
-      html.push(prop + '="' + attr[prop] + '"');
-    }
+    if (attr[prop]) html.push(prop + '="' + attr[prop] + '"')
   }
-  return html.join(' ') + (!closing ? ' /' : '') + '>';
+  return html.join(' ') + (!closing ? ' /' : '') + '>'
 }
 
 function closeTag (type) {
-  return '</' + type + '>';
+  return '</' + type + '>'
 }
 
-function createElement(type, closing, attr, contents) {
-  return openTag(type, closing, attr) +  (closing ? (contents || '') + closeTag(type) : '');
+function createElement(type, attr, contents) {
+  var closing = emptyTags.filter(isClosingTag)
+
+  function isClosingTag (val, idx, arr) {
+    if (val === type) return false
+    return true
+  }
+
+  return openTag(type, closing, attr) + (closing ? (contents || '') + closeTag(type) : '')
 }
 
-module.exports = createElement;
+module.exports = createElement
