@@ -44,12 +44,7 @@ function closeTag (type) {
 }
 
 function createElement(type, attr, contents) {
-  var closing = emptyTags.filter(isClosingTag)
-
-  function isClosingTag (val, idx, arr) {
-    if (val === type) return false
-    return true
-  }
+  var closing = emptyTags.indexOf(type) === -1 ? true : false
 
   return openTag(type, closing, attr) + (closing ? (contents || '') + closeTag(type) : '')
 }
