@@ -8,7 +8,7 @@
  * https://github.com/badsyntax/handlebars-form-helpers
  */
 
-'use strict';
+'use strict'
 
 var emptyTags = [
   'link',
@@ -43,8 +43,8 @@ function closeTag (type) {
   return '</' + type + '>'
 }
 
-function createElement(type, attr, contents) {
-  var closing = emptyTags.indexOf(type) === -1 ? true : false
+function createElement (type, attr, contents) {
+  var closing = (emptyTags.indexOf(type) === -1)
 
   return openTag(type, closing, attr) + (closing ? (contents || '') + closeTag(type) : '')
 }
